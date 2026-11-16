@@ -46,8 +46,8 @@ public:
     Wallpaper(const Wallpaper&) = delete;
     Wallpaper& operator=(const Wallpaper&) = delete;
 
-    // Starts playback of `videoPath` on a background thread and returns
-    // immediately. An empty return value means playback started; anything else
+    // Starts playback on a background thread and waits for initialization.
+    // An empty return value means playback started; anything else
     // is a human-readable error and nothing is left running.
     //
     // Calling play() while already playing stops the previous video first.
@@ -60,6 +60,8 @@ public:
 
     State  state() const noexcept;
     bool   isPlaying() const noexcept { return state() == State::Playing; }
+    // Latest background playback failure, available after playback stops.
+    std::string lastError() const;
 
     // Replaces the log sink. May be called at any time, including while
     // playing.

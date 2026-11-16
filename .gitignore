@@ -1,0 +1,10 @@
+/.vs/
+/build/
+/out/
+/third_party/SDL3/lib/x64/*.pdb
+CMakeUserPresets.json
+
+third_party/ffmpeg/doc/
+third_party/ffmpeg/presets/
+
+*.exe
