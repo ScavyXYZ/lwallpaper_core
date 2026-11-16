@@ -1,7 +1,9 @@
 # Continuous integration
 
 `.github/workflows/ci.yml` runs on pushes, pull requests and manual dispatch.
-Windows Server 2025 / Visual Studio 2022 builds Release and Debug separately.
+Windows Server 2025 builds Release and Debug separately. The shared configure
+script detects the installed Visual Studio 2022/2026 C++ toolchain with
+`vswhere`, rather than depending on which image `windows-2025` currently selects.
 The core is built without Qt; console examples are compiled but the manual
 desktop-changing selftest is never run automatically.
 

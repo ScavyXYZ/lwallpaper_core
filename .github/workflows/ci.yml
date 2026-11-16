@@ -35,9 +35,7 @@ jobs:
       - name: Prepare verified FFmpeg CLI
         run: ./scripts/ci/prepare-ffmpeg.ps1 -Destination "$env:RUNNER_TEMP/ffmpeg"
       - name: Configure (no Qt)
-        run: >-
-          cmake -S . -B build -G "Visual Studio 17 2022" -A x64
-          -DBUILD_TESTING=ON -DLIVEWALLPAPER_BUILD_EXAMPLES=ON
+        run: ./scripts/ci/configure.ps1 -Kind Core -Root .
       - name: Build
         run: cmake --build build --config "${{ matrix.configuration }}" --parallel 2
       - name: Test
@@ -53,7 +51,7 @@ jobs:
           ./scripts/ci/stage-artifacts.ps1 -Kind Core
           -Configuration "${{ matrix.configuration }}" -Root .
       - name: Upload build artifacts
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: core-windows-x64-${{ matrix.configuration }}
           path: out/ci-package/${{ matrix.configuration }}/
@@ -61,7 +59,7 @@ jobs:
           retention-days: 14
       - name: Upload test and configuration diagnostics
         if: always()
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
           name: core-diagnostics-${{ matrix.configuration }}
           path: |
