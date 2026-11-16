@@ -39,7 +39,7 @@ struct Wallpaper::Impl {
         cancelled = true;
         if (thread.joinable()) thread.join();
         state = State::Idle;
-        { std::lock_guard lock(errorMutex); lastError.clear(); }
+        { std::lock_guard errorLock(errorMutex); lastError.clear(); }
         if (path.empty() || !std::filesystem::exists(std::filesystem::u8path(path)))
             return "Video file not found: " + path;
         cancelled = false;
